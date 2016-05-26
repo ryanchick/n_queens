@@ -1,12 +1,13 @@
 var express = require('express')
 var bodyParser = require('body-parser')
-var port = 80;
+var port = 8089;
 
 var app = express();
 app.use(express.static(__dirname + './../app/'));
 app.use(bodyParser.json());
 
 app.get('/api/backtrack/:size/:random',function(req,res){
+	console.log(req.params)
 	if(req.params.random == 1){
 		var random = true;
 	}else{
@@ -16,6 +17,7 @@ app.get('/api/backtrack/:size/:random',function(req,res){
 	res.json(queenSol)
 
 	function backtrack(size){
+		console.log('backtracking')
 		var solution = [];
 		check(solution,0)
 		
@@ -61,6 +63,7 @@ app.get('/api/backtrack/:size/:random',function(req,res){
 })
 
 app.get('api/climb/:size',function(req,res){
+	console.log(req.params)
 	var queenSol = nQueens(req.params.size);
 	res.json(queenSol);
 
@@ -68,6 +71,7 @@ app.get('api/climb/:size',function(req,res){
 	//HILL CLIMBING FUNCTIONS
 	//main hill climbing function - randomizes and starts climb
 	function nQueens(size){
+		console.log('climbing')
 		var maxTry = 1000; //limited number of random restarts so it doesn't go on forever
 		var start = new Date();
 		for(var i = 0;i < maxTry;i++){
