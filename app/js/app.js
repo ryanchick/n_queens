@@ -42,8 +42,8 @@
 			queenVm.failed = false;
 			queenVm.loading = true;
 			queenVm.time = 0;
-			var ifRandom = ''
-			var start = new Date();
+			var ifRandom = '';
+			// var start = new Date();
 			// queenVm.loading = false;
 			if(queenVm.type.value == 0){
 				var method = 'backtrack';
@@ -54,13 +54,14 @@
 				}
 			} else if(queenVm.type.value == 1){
 				var method = 'climb';
-
 			}
+			// console.log('api/' + method + '/' + queenVm.n + ifRandom)
+
 			$http.get('api/' + method + '/' + queenVm.n + ifRandom)
 				.then(function(res){
 					console.log(res)
-					var solved = res.data;
-					queenVm.time = new Date() - start;
+					var solved = res.data.queens;
+					queenVm.time = res.data.time;
 					queenVm.loading = false;
 					if(solved == false){
 						queenVm.board = [];

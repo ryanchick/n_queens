@@ -8,19 +8,21 @@ app.use(bodyParser.json());
 
 app.get('/api/backtrack/:size/:random',function(req,res){
 	console.log(req.params)
+	var time;
 	if(req.params.random == 1){
 		var random = true;
 	}else{
 		var random = false;
 	}
-	var queenSol = backtrack(req.params.size)
-	res.json(queenSol)
+	var queenSol = backtrack(req.params.size);
+	res.json({time:time,queens:queenSol});
 
 	function backtrack(size){
 		console.log('backtracking')
 		var solution = [];
+		var start = new Date();
 		check(solution,0)
-		
+		time = new Date() - start;
 		return solution;
 
 		function check(queens,count){
@@ -62,10 +64,11 @@ app.get('/api/backtrack/:size/:random',function(req,res){
 	}
 })
 
-app.get('api/climb/:size',function(req,res){
+app.get('/api/climb/:size',function(req,res){
 	console.log(req.params)
+	var time;
 	var queenSol = nQueens(req.params.size);
-	res.json(queenSol);
+	res.json({time:time,queens:queenSol});
 
 
 	//HILL CLIMBING FUNCTIONS
@@ -81,7 +84,7 @@ app.get('api/climb/:size',function(req,res){
 			if(sol(queens)){
 				console.log('solved')
 				// console.log(queens)
-				queenVm.time = new Date() - start;
+				time = new Date() - start;
 				return queens;
 			}
 		}
