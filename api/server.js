@@ -1,6 +1,6 @@
 var express = require('express')
 var bodyParser = require('body-parser')
-var port = 8089;
+var port = 80;
 
 var app = express();
 app.use(express.static(__dirname + './../app/'));
