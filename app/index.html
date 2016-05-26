@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>N Queens Challenge</title>
+	<link rel="stylesheet" type="text/css" href="css/styles.css">
+	<script src="js/vendor/angular.js"></script>
+	<script src='js/app.js'></script>
+
+</head>
+<body ng-app='queenApp' ng-controller='queenCtrl as ctrl'>
+	<h3 class='title'>N-Queens Challenge</h3>
+	<form class="options">
+		Number of Queens: 
+		<input name='numQueens' type="number" min='0' ng-model='ctrl.n'/>
+		Algorithm Type: 
+		<select name='solveType' ng-model='ctrl.type' ng-options='sol as sol.name for sol in ctrl.solOptions'>
+		</select>
+		<span ng-show='ctrl.type.value == 0'>Random Start? <input type="checkbox" name="random" ng-model="ctrl.random"></span>
+		Recommended Max N: {{ctrl.type.recMax}}
+		<!-- {{ctrl.type}} -->
+		<button type='button' ng-click="ctrl.loading = true;ctrl.solve()">Solve!</button>
+	</form>
+	<hr>
+	<div ng-show='ctrl.board.length > 0 && !ctrl.loading' class='board' ng-style={'width':ctrl.rowWidth,'height':ctrl.rowWidth}>
+		<div ng-repeat='row in ctrl.board'>
+			<div ng-repeat='square in row track by $index'
+				ng-class="{'queen':square == 1,'black':($parent.$index + $index)%2 == 1,'white':($parent.$index + $index)%2 == 0}"
+				ng-style={'width':ctrl.blockWidth,'height':ctrl.blockWidth}
+				></div>
+		</div>
+	</div>
+	<b ng-show="ctrl.loading">Trying to find a solution... </b>
+	<b ng-show='ctrl.failed'>Failed to find a solution in time.</b>
+	<b ng-show='ctrl.time > 0'>Solved in {{ctrl.time}}ms</b>
+	<!-- <script src="js/vendor/jquery-1.12.2.js"></script> -->
+	<!-- <script src='js/queens.js'></script> -->
+	<!-- <script src="js/jquery-1.12.2.js"></script> -->
+	<!-- <script src='js/queens2.js'></script> -->
+	<!-- <script src='js/queens3.js'></script> -->
+	<!-- <script src='js/queens4.js'></script> -->
+	<!-- <script src='js/queens6.js'></script> -->
+	<!-- <script src='js/app2.js'></script> -->
+</body>
+</html>
