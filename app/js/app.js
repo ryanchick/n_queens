@@ -41,14 +41,21 @@
 		function solve(){
 			queenVm.failed = false;
 			queenVm.loading = true;
+			var ifRandom = ''
 			var start = new Date();
 			// queenVm.loading = false;
 			if(queenVm.type.value == 0){
 				var method = 'backtrack';
+				if(queenVm.random == true){
+					ifRandom = '/1'
+				} else {
+					ifRandom = '/0'
+				}
 			} else if(queenVm.type.value == 1){
 				var method = 'climb';
+
 			}
-			$http.get('api/' + method + '/' + queenVm.n)
+			$http.get('api/' + method + '/' + queenVm.n + ifRandom)
 				.then(function(res){
 					var solved = res;
 					queenVm.time = new Date() - start;

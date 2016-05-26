@@ -6,13 +6,17 @@ var app = express();
 app.use(express.static(__dirname + './../app/'));
 app.use(bodyParser.json());
 
-app.get('/api/backtrack/:size',function(req,res){
+app.get('/api/backtrack/:size/:random',function(req,res){
+	if(req.params.random == 1){
+		var random = true;
+	}else{
+		var random = false;
+	}
 	var queenSol = backtrack(req.params.size)
 	res.json(queenSol)
 
 	function backtrack(size){
 		var solution = [];
-		
 		check(solution,0)
 		
 		return solution;
@@ -22,7 +26,7 @@ app.get('/api/backtrack/:size',function(req,res){
 				return true;
 			}
 			for(var i = 0;i < size;i++){
-				if(count == 0 && queenVm.random == true){
+				if(count == 0 && random == true){
 					var r = Math.floor(Math.random()*size)
 					if(findSpot(queens,r,count)){
 						queens.push(r)
